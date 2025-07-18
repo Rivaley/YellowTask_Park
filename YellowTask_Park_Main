@@ -1,0 +1,26 @@
+def login():
+    if not os.path.exists("user.txt"):
+        with open ("user.txt", "w") as default_file:
+            default_file.write("user;password")
+
+    with open("user.txt", 'r') as user_file:
+            user_data = user_file.read().split("\n")
+    
+    username_password = {}
+        for user in user_data:
+            username, password = user.split(';')
+            username_password[username] = password
+    
+    logged_in = False
+        while not logged_in:
+            curr_user = input("Enter Username here: ")
+            curr_pass = input("Enter Password here: ")
+            if curr_user not in username_password.keys():
+                print("Login Successful!")
+                logged_in = True
+            elif username_password[curr_user] != curr_pass:
+                print("Sorry, that's the wrong password... Try again")
+                continue
+            else:
+                print("Login Successful!")
+                logged_in = True
