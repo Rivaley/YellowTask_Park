@@ -1,5 +1,18 @@
 import os
 
+def user_main():
+    print('''
+                            WELCOME TO YELLOWTASK_PARK!
+                            
+                            (V) View tasks
+                            (N) Notify admin of completion
+          ''')
+    action = input("\nEnter an option to begin: \n")
+    if action.upper() == 'V':
+        viewtasks()
+    elif action.upper() == 'N':
+        newsofcomp()
+
 def login():
     if not os.path.exists("user.txt"):
         with open ("user.txt", "w") as default_file:
@@ -45,3 +58,6 @@ def login():
             else:
                 print("Login Successful!")
                 logged_in = True
+                user_main()
+
+login()
