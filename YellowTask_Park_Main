@@ -7,11 +7,40 @@ def user_main():
                             (V) View tasks
                             (N) Notify admin of completion
           ''')
+    loop = True
     action = input("\nEnter an option to begin: \n")
-    if action.upper() == 'V':
-        viewtasks()
-    elif action.upper() == 'N':
-        newsofcomp()
+    while loop == True:
+        if action.upper() == 'V':
+            viewtasks()
+            break
+        elif action.upper() == 'N':
+            newsofcomp()
+            break
+        else:
+            action = input("\nInvalid response, try again.: \n")
+
+def admin_main():
+    print('''
+                            WELCOME TO YELLOWTASK_PARK ADMINISTRATOR!
+                            
+                            (V) View tasks
+                            (E) Edit tasks
+                            (C) Confirm task completion
+          ''')
+    loop = True
+    action = input("\nEnter an option to begin: \n")
+    while loop == True:
+        if action.upper() == 'V':
+            viewtasksadmin()
+            break
+        elif action.upper() == 'E':
+            edittasks()
+            break
+        elif action.upper() == 'C':
+            confirmcomp()
+            break
+        else:
+            action = input("\nInvalid response, try again.: \n")
 
 def login():
     if not os.path.exists("user.txt"):
@@ -52,6 +81,7 @@ def login():
                 else:
                     print("Login Successful!")
                     logged_in = True
+                    admin_main()
             elif username_password[curr_user] != curr_pass:
                 print("Sorry, that's the wrong password... Try again")
                 continue
