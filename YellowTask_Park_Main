@@ -1,11 +1,16 @@
 import os
 
+def quitnow():
+    print("See ya around!")
+    print("Program owned and created by Riley Goering")
+
 def user_main():
     print('''
                             WELCOME TO YELLOWTASK_PARK!
                             
                             (V) View tasks
                             (N) Notify admin of completion
+                            (Q) Quit
           ''')
     loop = True
     action = input("\nEnter an option to begin: \n")
@@ -16,6 +21,8 @@ def user_main():
         elif action.upper() == 'N':
             newsofcomp()
             break
+        elif action.upper() == 'Q':
+            quitnow()
         else:
             action = input("\nInvalid response, try again.: \n")
 
@@ -26,6 +33,7 @@ def admin_main():
                             (V) View tasks
                             (E) Edit tasks
                             (C) Confirm task completion
+                            (Q) Quit
           ''')
     loop = True
     action = input("\nEnter an option to begin: \n")
@@ -39,6 +47,8 @@ def admin_main():
         elif action.upper() == 'C':
             confirmcomp()
             break
+        elif action.upper() == 'Q':
+            quitnow()
         else:
             action = input("\nInvalid response, try again.: \n")
 
@@ -52,15 +62,15 @@ def login():
             default_file_a.write("admin;password")
 
     with open("user.txt", 'r') as user_file:
-            user_data = user_file.read().split("\n")
+        user_data = user_file.read().split("\n")
 
     with open("admin.txt", 'r') as admin_file:
         admin_data = admin_file.read().split("\n")
     
     username_password = {}
-        for user in user_data:
-            username, password = user.split(';')
-            username_password[username] = password
+    for user in user_data:
+        username, password = user.split(';')
+        username_password[username] = password
 
     adminame_password = {}
     for admin in admin_data:
