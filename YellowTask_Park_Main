@@ -23,6 +23,7 @@ def user_main():
             break
         elif action.upper() == 'Q':
             quitnow()
+            break
         else:
             action = input("\nInvalid response, try again.: \n")
 
@@ -49,6 +50,7 @@ def admin_main():
             break
         elif action.upper() == 'Q':
             quitnow()
+            break
         else:
             action = input("\nInvalid response, try again.: \n")
 
@@ -56,11 +58,11 @@ def login():
     if not os.path.exists("user.txt"):
         with open ("user.txt", "w") as default_file:
             default_file.write("user;password")
-
+    
     if not os.path.exists("admin.txt"):
         with open ("admin.txt", "w") as default_file_a:
             default_file_a.write("admin;password")
-
+    
     with open("user.txt", 'r') as user_file:
         user_data = user_file.read().split("\n")
 
@@ -69,35 +71,41 @@ def login():
     
     username_password = {}
     for user in user_data:
-        username, password = user.split(';')
-        username_password[username] = password
+        try:
+            username, password = user.split(';')
+            username_password[username] = password
+        except ValueError as e:
+            print(f"Skipping line: {user} due to error: {e}")
 
     adminame_password = {}
     for admin in admin_data:
-        adminame, password = admin.split(';')
-        adminame_password[adminame] = password
+        try:
+            adminame, password = admin.split(';')
+            adminame_password[adminame] = password
+        except ValueError as e:
+            print(f"Skipping line: {admin} due to error: {e}")
 
     logged_in = False
-        while not logged_in:
-            curr_user = input("Enter Username here: ")
-            curr_pass = input("Enter Password here: ")
-            if curr_user not in username_password.keys():
-                if curr_user not in adminame_password.keys():
-                    print("Sorry, that username does not exist... Try again")
-                    continue
-                elif adminame_password[curr_user] != curr_pass:
-                    print("Sorry, that's the wrong password... Try again")
-                    continue
-                else:
-                    print("Login Successful!")
-                    logged_in = True
-                    admin_main()
-            elif username_password[curr_user] != curr_pass:
+    while not logged_in:
+        curr_user = input("Enter Username here: ")
+        curr_pass = input("Enter Password here: ")
+        if curr_user not in username_password.keys():
+            if curr_user not in adminame_password.keys():
+                print("Sorry, that username does not exist... Try again")
+                continue
+            elif adminame_password[curr_user] != curr_pass:
                 print("Sorry, that's the wrong password... Try again")
                 continue
             else:
                 print("Login Successful!")
                 logged_in = True
-                user_main()
+                admin_main()
+        elif username_password[curr_user] != curr_pass:
+            print("Sorry, that's the wrong password... Try again")
+            continue
+        else:
+            print("Login Successful!")
+            logged_in = True
+            user_main()
 
 login()
